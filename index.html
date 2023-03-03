@@ -1,0 +1,70 @@
+<html>
+<head>
+<script>
+// A function to convert time to minutes
+function timeToMinutes(time) {
+  var parts = time.split(":"); // Split the time by :
+  var hours = parseInt(parts[0]); // Get the hours part
+  var minutes = parseInt(parts[1]); // Get the minutes part
+  var seconds = parseInt(parts[2]); // Get the seconds part
+  return hours * 60 + minutes + seconds / 60; // Return the total minutes
+}
+
+// A function to convert minutes to time
+function minutesToTime(minutes) {
+  var hours = Math.floor(minutes / 60); // Get the whole hours part
+  var remainder = minutes % 60; // Get the remaining minutes part
+  var min = Math.floor(remainder); // Round down the minutes
+  var sec = Math.round((remainder - min) * 60); // Round up the seconds
+  return hours + ":" + min + ":" + sec; // Return the time string
+}
+
+// A function to calculate and display the difference between two times in minutes and time format
+function calculateDifference() {
+  var time1 = document.getElementById("time1").value; // Get the first time input value
+  var time2 = document.getElementById("time2").value; // Get the second time input value
+
+  if (time1 && time2) { // If both times are entered
+    var min1 = timeToMinutes(time1); // Convert the first time to minutes
+    var min2 = timeToMinutes(time2); // Convert the second time to minutes
+
+    if (min1 > min2) { // If the first time is later than the second time, swap them
+      [min1, min2] = [min2, min1];
+    }
+
+    var diffMin = min2 - min1; // Calculate the difference in minutes
+
+    if (diffMin > 0) { // If there is a positive difference 
+      var diffTime = minutesToTime(diffMin); // Convert the difference to time format
+      
+      document.getElementById("result").innerHTML =
+        "The difference between " +
+        time1 +
+        " and " +
+        time2 +
+        " is " +
+        diffMin +
+        " minutes or " +
+        diffTime +
+        "."; 
+      } else { 
+      document.getElementById("result").innerHTML =
+        "The two times are equal."; 
+    }
+    
+  
+} else {
+    document.getElementById("result").innerHTML =
+      "Please enter both times."; 
+}
+}
+</script>
+</head>
+<body>
+<h3>Enter two times in HH:MM:SS format:</h3>
+<input type="text" id="time1" placeholder="First Time">
+<input type="text" id="time2" placeholder="Second Time">
+<button onclick="calculateDifference()">Calculate Difference</button>
+<p id="result"></p>
+</body>
+</html>
